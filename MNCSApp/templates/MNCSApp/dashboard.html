@@ -1,0 +1,77 @@
+<style>
+    .profile-container {
+        padding: 1rem;
+        background-color: #306ccc;
+        border-radius: 0.6rem;
+        margin: 1rem;
+        font-family: "Source Sans Pro", sans-serif;
+        color: mintcream;
+    }
+
+    .biography {
+        white-space: pre-line;
+    }
+
+    .section-heading {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 1rem;
+        color: antiquewhite;
+    }
+
+    .complain-container {
+        width: 80%;
+        background-color: mintcream;
+        color: crimson;
+    }
+
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% block header %}
+    <title>Crime Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if request.session.USERNAME is not None  %}
+
+   <div class="w-50 mx-auto my-3">
+   <h4 class="text-center mx-auto my-3">Hello, {{ Nick_Name }}! WELCOME TO YOUR DASHBOARD</h4>
+   <div class="info-container profile-container">
+        <div class="row justify-content-around">
+           <!-- <div class="col-sm-4">
+                <img src="{{ user.profile_image.url }}" alt="Image not available" height="200" width="250">
+                <h5 class="text-center my-3">Profile Avatar</h5>
+            </div>-->
+
+            <div class="col-sm-6">
+                <p class="section-heading">{{ Nick_Name }}</p>
+                <p class="section-heading">District</p> <p> {{ District }}</p>
+                <p class="section-heading">Email</p><p> {{ Email }}</p>
+
+            </div>
+        </div>
+
+   </div>
+
+    <div class="container">
+        <div class="container row complain-container">
+<a href="/edit_profile/{{ id }}" class="btn btn-sm btn warning">edit</a>
+        </div>
+    </div>
+
+    <div class="container my-3 mx-auto text-center">
+        <a class="btn btn-primary" href="/user_complaints/{{ id }}" role="button">My Complaints</a>
+        <a class="btn btn-primary" href="/Reporter/" role="button">Register a new Complaint</a>
+    </div>
+
+
+     {% for i in data %}
+      <div class="row">{{i}}</div>
+    {% endfor %}
+   </div>
+
+{% endif %}
+{% endblock %}

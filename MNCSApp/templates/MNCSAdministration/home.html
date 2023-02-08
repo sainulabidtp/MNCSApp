@@ -1,0 +1,45 @@
+<style>
+    .profile-container {
+        padding: 1rem;
+        background-color: #306ccc;
+        border-radius: 0.6rem;
+        margin: 1rem;
+        font-family: "Source Sans Pro", sans-serif;
+        color: mintcream;
+    }
+
+    .biography {
+        white-space: pre-line;
+    }
+
+    .section-heading {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 1rem;
+        color: antiquewhite;
+    }
+
+    .complain-container {
+        width: 80%;
+        background-color: mintcream;
+        color: crimson;
+    }
+
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% block header %}
+    <title>Crime Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container my-3 mx-auto text-center">
+        <a class="btn btn-primary" href="/ManageInvestigators/" role="button">Manage Investigators</a>
+        <a class="btn btn-primary" href="/ManageRepotrters/" role="button">Manage Reporters</a>
+        <a class="btn btn-primary" href="/Allocate_Investigators/" role="button">Allocate Investigators</a>
+        <a class="btn btn-primary" href="/View_Feedback/" role="button">View Feedbacks</a>
+    </div>
+ </div>
+{% endblock %}

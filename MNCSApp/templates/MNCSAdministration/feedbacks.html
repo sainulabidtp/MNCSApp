@@ -1,0 +1,49 @@
+<style>
+    .complain-container {
+        font-family: "Nunito", sans-serif;
+        padding: 1rem;
+        margin: 1rem;
+    }
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% load static %}
+
+{% block header %} <title>All Feedbacks</title>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container complain-container">
+        <table class="table">
+    <thead>
+      <tr class="my-3">
+        <th>Name </th>
+        <th>Email</th>
+          <th>Subject</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in Feedbacks %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.sub }}</td>
+            <td>{{ item.message }}</td>
+
+
+        </tr>
+
+
+
+
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+
+
+{% endblock %}
+

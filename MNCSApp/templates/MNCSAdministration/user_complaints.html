@@ -1,0 +1,63 @@
+<style>
+    .complain-container {
+        font-family: "Nunito", sans-serif;
+        padding: 1rem;
+        margin: 1rem;
+    }
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% load static %}
+
+{% block header %} <title>All Registered Complaints</title>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container complain-container">
+        <table class="table">
+    <thead>
+      <tr class="my-3">
+        <th>Complaint </th>
+        <th>Submitted By</th>
+          <th>Reporter ID</th>
+        <th>Image</th>
+          <th>video</th>
+          <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in Reports %}
+        <tr>
+            <td>{{ item.Report_text }}</td>
+            <td>{{ item.Date_and_time }}</td>
+            <td>{{ item.Reporter_ID_id }}</td>
+            <td><img style="height: 200px;width: 250px" class="img img thumbnail" src="{% static 'media/' %}{{item.Proof_Image}}" alt="Error
+Loading">
+</td>
+        <td><video style="height: 200px;width: 400px" controls="controls" class="img img thumbnail" src="{% static 'media/' %}{{item.Proof_clip}}" alt="Error
+Loading" type="video/mp4"></video>
+</td>
+            <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/Investigator_take_action/{{item.id}}">View Details</a></button></td>
+            {% for i in details %}
+            {% if i.Blocked == "True" %}
+            <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/unblock_user/{{item.Reporter_ID_id}}">Unblock</a></button></td>
+            {% elif i.Blocked == "False" %}
+             <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/block_user/{{item.Reporter_ID_id}}">Block</a></button></td>
+            {% endif %}
+            {% endfor %}
+
+        </tr>
+
+
+
+
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+
+
+{% endblock %}
+

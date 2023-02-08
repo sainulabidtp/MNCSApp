@@ -1,0 +1,276 @@
+<style>
+.contact .php-email-form {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 0 10px 10px 0;
+}
+
+.contact .php-email-form .form-group {
+  padding-bottom: 8px;
+}
+
+.contact .php-email-form .error-message {
+  display: none;
+  color: #fff;
+  background: #df1529;
+  text-align: left;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact .php-email-form .error-message br+br {
+  margin-top: 25px;
+}
+
+.contact .php-email-form .sent-message {
+  display: none;
+  color: #fff;
+  background: #059652;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact .php-email-form .loading {
+  display: none;
+  background: #fff;
+  text-align: center;
+  padding: 15px;
+}
+
+.contact .php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid #059652;
+  border-top-color: #fff;
+  -webkit-animation: animate-loading 1s linear infinite;
+  animation: animate-loading 1s linear infinite;
+}
+
+.contact .php-email-form input,
+.contact .php-email-form textarea {
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+.contact .php-email-form input[type=text],
+.contact .php-email-form input[type=email],
+.contact .php-email-form textarea {
+  padding: 12px 15px;
+}
+
+.contact .php-email-form input[type=text]:focus,
+.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.contact .php-email-form textarea {
+  padding: 10px 12px;
+}
+
+.contact .php-email-form button[type=submit] {
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 45px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: rgba(0, 131, 116, 0.8);
+}
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+  $postfix: if($infix != "", $infix + "-down", "");
+
+  @include media-breakpoint-down($breakpoint) {
+    .modal-fullscreen#{$postfix} {
+      width: 100vw;
+      max-width: none;
+      height: 100%;
+      margin: 0;
+
+      .modal-content {
+        height: 100%;
+        border: 0;
+        @include border-radius(0);
+      }
+
+      .modal-header,
+      .modal-footer {
+        @include border-radius(0);
+      }
+
+      .modal-body {
+        overflow-y: auto;
+      }
+    }
+  }
+}
+    .detail-container {
+        font-family: "Nunito", sans-serif;
+        color: crimson;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+
+    .detail-container {
+        position: relative;
+
+    }
+
+    .fa {
+        font-size: 40px;
+        color: mintcream;
+    }
+
+    .fa:hover {
+        cursor: hand;
+    }
+
+    #form-container {
+        position: absolute;
+        margin: 1.5rem;
+        background-color: #8eaf5b;
+        width: 80%;
+        top: 50px;
+        left: 100px;
+        z-index: 10;
+        border-radius: 0.6rem;
+
+    }
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+
+{% block header %}
+    <title>Complain Detail</title>
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+{% for object in details %}
+
+
+<main>
+
+ <section id="details" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Details Of Crime Report</h2>
+         </div>
+
+        <div class="row gx-lg-0 gy-4">
+
+          <div class="col-lg-4">
+
+            <div class="info-container d-flex flex-column align-items-center justify-content-center">
+              <div class="info-item d-flex">
+                <div>
+                  <h4>Reporter ID: </h4>
+                  <p>{{ object.Reporter_ID_id }}</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex">
+                <div>
+                  <h4>Report:</h4>
+                  <p>{{ object.Report_text }}
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex">
+                <div>
+                  <h4>Time : </h4>
+                  <p>{{ object.Date_and_time }}</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex">
+                <div>
+                  <h4>Open Hours:</h4>
+                  <p>Mon-Sat: 11AM - 23PM</p>
+                </div>
+              </div><!-- End Info Item -->
+            </div>
+
+          </div>
+
+          <div class="col-lg-8">
+            <div class="php-email-form">
+            <h2>Image Proof</h2>
+          <img style="height: 200px;width: 250px" class="img img thumbnail" src="{% static 'media/' %}{{object.Proof_Image}}" alt="Error
+Loading"><h2>Video Proof</h2>
+                <video style="height: 200px;width: 400px" controls="controls" class="img img thumbnail" src="{% static 'media/' %}{{object.Proof_clip}}" alt="Error
+Loading" type="video/mp4"></video>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+            </div>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section>
+
+  <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Update status and Report</h2>
+          </div>
+
+        <div class="row gx-lg-0 gy-4">
+
+
+          <div class="col-lg">
+            <form action="/Update_Status/{{ object.id }}" method="post" role="form" class="php-email-form">
+                 {% csrf_token %}
+              <select class="form-select" name="status" aria-label="Default select example">
+  <option value="On Progress">On Progress</option>
+  <option value="FIR Filed">FIR Filed</option>
+  <option value="Fake Lead">Fake Lead</option>
+  <option value="Case Closed">Case Closed</option>
+</select>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="report" rows="7" placeholder="FIR" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Submit</button></div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section>
+    <footer class="pt-3 mt-4 text-muted border-top">
+      &copy; 2022
+    </footer>
+  </div>
+</main>
+<script>
+
+</script>
+
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,81 @@
+<style>
+    .profile-container {
+        padding: 1rem;
+        background-color: #306ccc;
+        border-radius: 0.6rem;
+        margin: 1rem;
+        font-family: "Source Sans Pro", sans-serif;
+        color: mintcream;
+    }
+
+    .biography {
+        white-space: pre-line;
+    }
+
+    .section-heading {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 1rem;
+        color: antiquewhite;
+    }
+
+    .complain-container {
+        width: 80%;
+        background-color: mintcream;
+        color: crimson;
+    }
+
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% block header %}
+    <title>Crime Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if request.session.INVESTIGATOR is not None %}
+{% for item in Inve_Registration %}
+   <div class="w-50 mx-auto my-3">
+   <h4 class="text-center mx-auto my-3">Hello, {{ item.Nick_Name }}! WELCOME TO YOUR DASHBOARD</h4>
+   <div class="container profile-container">
+        <div class="row justify-content-around">
+           <!-- <div class="col-sm-4">
+                <img src="{{ user.profile_image.url }}" alt="Image not available" height="200" width="250">
+                <h5 class="text-center my-3">Profile Avatar</h5>
+            </div>-->
+             <div class="col-sm-6">
+               <img style="height: 200px;width: 250px" class="img img thumbnail" src="{% static 'media/' %}{{item.Image}}" alt="Error
+Loading">  </div>
+            <div class="col-sm-6">
+                <p class="section-heading">{{ item.Nick_Name }}</p>
+                <p> {{ item.Office_Code }}</p>
+                <p class="section-heading">District</p> <p> {{ item.District }}</p>
+                <p class="section-heading">Email</p><p> {{ item.Email }}</p>
+
+            </div>
+        </div>
+
+   </div>
+
+    <div class="container">
+        <div class="container row complain-container">
+
+        </div>
+    </div>
+       <div class="container">
+        <div class="container row complain-container">
+<a href="/edit_Investigator_profile/{{ item.id }}" class="btn btn-sm btn warning">edit</a>
+        </div>
+    </div>
+
+
+       {% endfor %}
+
+     {% for i in data %}
+      <div class="row">{{i}}</div>
+    {% endfor %}
+   </div>
+{% endif %}
+{% endblock %}
