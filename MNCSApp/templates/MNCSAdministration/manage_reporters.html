@@ -1,54 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>$Title$</title>
 </head>
 <body>
-
+$END$
 </body>
-</html><style>
-    .complain-container {
-        font-family: "Nunito", sans-serif;
-        padding: 1rem;
-        margin: 1rem;
-    }
-</style>
-
-{% extends "MNCSApp/master.html" %}
-
-{% load static %}
-
-{% block header %} <title>All Registered Complaints</title>
-
-{% endblock %}
-
-{% block content %}
-    <div class="container complain-container">
-        <table class="table">
-    <thead>
-      <tr class="my-3">
-        <th>Name </th>
-          <th>Email</th>
-        <th>District</th>
-          <th>State</th>
-          <th>Complaints</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for item in Reports %}
-        <tr>
-            <td>{{ item.Nick_Name }}</td>
-            <td>{{ item.Email }}</td>
-            <td>{{ item.District }}</td>
-            <td>{{ item.State }}</td>
-            <td><a class="btn btn-primary" href="/ManageReportersComplaints/{{ item.id }}" role="button">view</a></td>
-        </tr>
-
-    {% endfor %}
-    </tbody>
-  </table>
-    </div>
-
-{% endblock %}
-
+</html>
