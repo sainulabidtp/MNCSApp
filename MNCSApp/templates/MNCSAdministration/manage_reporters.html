@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+
 </body>
-</html>
+</html><style>
+    .complain-container {
+        font-family: "Nunito", sans-serif;
+        padding: 1rem;
+        margin: 1rem;
+    }
+</style>
+
+{% extends "MNCSApp/master.html" %}
+
+{% load static %}
+
+{% block header %} <title>All Registered Complaints</title>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container complain-container">
+        <table class="table">
+    <thead>
+      <tr class="my-3">
+           <th>Reporter ID</th>
+          <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in reporters %}
+        <tr>
+            <td>{{ item.id }}</td>
+            {% if item.Blocked == "True" %}
+            <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/unblock_user/{{item.id}}">Unblock</a></button></td>
+            {% elif item.Blocked == "False" %}
+             <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/block_user/{{item.id}}">Block</a></button></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+
+{% endblock %}
+

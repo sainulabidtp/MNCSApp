@@ -26,7 +26,7 @@ from django.conf import settings
 
 
 def index(request):
-    return render(request,"MNCSApp/login.html")
+    return render(request,"MNCSApp/index.html")
 
 def User_Register(request):
     if request.method=="POST":
@@ -457,27 +457,30 @@ def Invetigator_logout(request):
 
 def Reporter(request):
     if request.method == "POST":
-        date_time = datetime.timestamp(datetime.now())
-        Report = request.POST["report_text"]
-        Image = request.FILES["proof_image"]
-        Clip = request.FILES["proof_clip"]
-        fs = FileSystemStorage()
-        Image_name = str(datetime.timestamp(datetime.now())) + Image.name
-        fs.save(Image_name, Image)
-        fv = FileSystemStorage()
-        Clip_name = str(datetime.timestamp(datetime.now())) + Clip.name
-        fv.save(Clip_name, Clip)
+        if request.POST["report_text"] !='' and request.FILES["proof_image"] !='' and  request.FILES["proof_clip"] !='':
+            date_time = datetime.timestamp(datetime.now())
+            Report = request.POST["report_text"]
+            Image = request.FILES["proof_image"]
+            Clip = request.FILES["proof_clip"]
+            fs = FileSystemStorage()
+            Image_name = str(datetime.timestamp(datetime.now())) + Image.name
+            fs.save(Image_name, Image)
+            fv = FileSystemStorage()
+            Clip_name = str(datetime.timestamp(datetime.now())) + Clip.name
+            fv.save(Clip_name, Clip)
 
-        get_id = Registration.objects.get(id=request.session['ID']) # geting forein key id
-        #request.session['Report'] = Report
+            get_id = Registration.objects.get(id=request.session['ID']) # geting forein key id
+            #request.session['Report'] = Report
 
-        #print(get_id.id)
+            #print(get_id.id)
 
-        Report = Crime_Reporting( Reporter_ID_id= get_id.id,Date_and_time=datetime.now(), Report_text=Report, Proof_Image=Image_name,
-                               Proof_clip=Clip_name)
-        Report.save()
-    Report = Crime_Reporting.objects.all()
-    return render(request, "MNCSApp/reporter_form.html", {'Reporting': Report})
+            Report = Crime_Reporting( Reporter_ID_id= get_id.id,Date_and_time=datetime.now(), Report_text=Report, Proof_Image=Image_name,
+                                   Proof_clip=Clip_name)
+            Report.save()
+            reports = Crime_Reporting.objects.filter(Reporter_ID_id=request.session['ID'])
+            return render(request, "MNCSApp/user_complaints.html",
+                          {'Reports': reports,  'id': get_id, })
+    return render(request, "MNCSApp/reporter_form.html")
 
 
 def user_complaints(request, user_id):
@@ -486,11 +489,6 @@ def user_complaints(request, user_id):
     get_id = Registration.objects.get(id=request.session['ID'])
 
     reports=Crime_Reporting.objects.filter(Reporter_ID_id=user_id)
-
-
-
-
-    print("njdnjvjjj", user_id)
     return render(request,"MNCSApp/user_complaints.html",{'Reports':reports, 'data':Kerala_District, 'id':get_id,} )
 def edit_user_complaints(request, id):
     rports = Crime_Reporting.objects.get(id=id)
@@ -532,31 +530,33 @@ def Investigator_view_cmplaints(request):
 
 def Investigator_Register(request):
     if request.method=="POST":
-        #ID = request.POST["Reporter_ID"]
-        Name = request.POST["Nick_Name"]
-        Password = request.POST["Pass_Word"]
-        Officecode = request.POST["OfficeCode"]
-        District = request.POST["District"]
-        State = request.POST["State"]
-        Email = request.POST["Email"]
-        Report = request.POST["Report"]
-        Image = request.FILES["proof_image"]
-        fs = FileSystemStorage()
-        Image_name = str(datetime.timestamp(datetime.now())) + Image.name
-        fs.save(Image_name, Image)
-        get_email = Registration.objects.filter(Email=Email)
-        print("get_email", get_email)
-        if get_email:
-            message = "Email Already Exist"
-            return render(request, "MNCSApp/Investigator_Registration_Form.html", {"message": message})
-        else:
-            Regstrn = Investigator_Registration(Nick_Name=Name, Pass_Word=Password, Office_Code=Officecode,
-                                                District=District, State=State, Email=Email, Contact_Num=Report,
-                                                Image=Image_name)
-            Regstrn.save()
+        authenticatedEmail = authentication.objects.filter(email=request.POST["Email"])
+        if authenticatedEmail:
+            #ID = request.POST["Reporter_ID"]
+            Name = request.POST["Nick_Name"]
+            Password = request.POST["Pass_Word"]
+            Officecode = request.POST["OfficeCode"]
+            District = request.POST["District"]
+            State = request.POST["State"]
+            Email = request.POST["Email"]
+            Report = request.POST["Report"]
+            Image = request.FILES["proof_image"]
+            fs = FileSystemStorage()
+            Image_name = str(datetime.timestamp(datetime.now())) + Image.name
+            fs.save(Image_name, Image)
+            get_email = Investigator_Registration.objects.filter(Email=Email)
+            print("get_email", get_email)
+            if get_email:
+                message = "Email Already Exist"
+                return render(request, "MNCSApp/Investigator_Registration_Form.html", {"message": message})
+            else:
+                Regstrn = Investigator_Registration(Nick_Name=Name, Pass_Word=Password, Office_Code=Officecode,
+                                                    District=District, State=State, Email=Email, Contact_Num=Report,
+                                                    Image=Image_name)
+                Regstrn.save()
 
-    Regstrn=Investigator_Registration.objects.all()
-    return render(request,"MNCSApp/login.html",{'Registration':Regstrn})
+        Regstrn=Investigator_Registration.objects.all()
+        return render(request,"MNCSApp/login.html",{'Registration':Regstrn})
 
 def Investigator_Registration_Form(request):
 
@@ -622,7 +622,12 @@ def home(request):
 def ManageInvestigators(request):
     Investigators=Investigator_Registration.objects.all()
     return render(request,"MNCSAdministration/manageInvestigators.html",{'Reports':Investigators,  } )
-def ManageRepotrters(request):
+def ManageReporters(request,):
+    reporters = Registration.objects.all()
+
+    return render(request, "MNCSAdministration/manage_reporters.html", { 'reporters': reporters})
+
+def ManageReports(request,):
     reports = Crime_Reporting.objects.all()
     details = Registration.objects.all()
     return render(request, "MNCSAdministration/user_complaints.html", {'Reports': reports, 'details': details})
@@ -657,17 +662,15 @@ def Investigator_take_action(request, id):
 def block_user(request, id):
     print("ugfh")
     Registration.objects.filter(id=id).update(Blocked="True")
-    reports = Crime_Reporting.objects.all()
-    details = Registration.objects.all()
-    return render(request, "MNCSAdministration/user_complaints.html", {'Reports': reports, 'details': details})
+    reporters = Registration.objects.all()
+    return render(request, "MNCSAdministration/manage_reporters.html", {'reporters': reporters})
 
 
 def unblock_user(request, id):
     print("ugfh")
     Registration.objects.filter(id=id).update(Blocked="False")
-    reports = Crime_Reporting.objects.all()
-    details = Registration.objects.all()
-    return render(request, "MNCSAdministration/user_complaints.html", {'Reports': reports, 'details': details})
+    reporters = Registration.objects.all()
+    return render(request, "MNCSAdministration/manage_reporters.html", {'reporters': reporters})
 
 def Allot_Investigators(request, id):
     if request.method == "POST":
@@ -697,9 +700,9 @@ def View_Feedback(request):
     return render(request, "MNCSAdministration/feedbacks.html", context)
 
 def generateOTP():
-    # Declare a digits variable
-    # which stores all digits
+    # which stores all digits    # Declare a digits variable
     digits = "0123456789"
+    global OTP
     OTP = ""
 
     # length of password can be changed
@@ -713,7 +716,10 @@ class Email_Verification(View):
 
     def get(self,request,*args,**kwargs):
         return render (request,"MNCSApp/emailverification.html",)
-otp =""
+class Investigator_Email_Verification(View):
+
+    def get(self,request,*args,**kwargs):
+        return render (request,"MNCSApp/investigator_emailverification.html",)
 def send_OTP(request):
     subject = "mncrs otp"
     message = generateOTP()
@@ -731,11 +737,43 @@ def send_OTP(request):
     else:
             return HttpResponse('Make sure all fields are entered and valid.')
 
+def investigator_send_OTP(request):
+    subject = "mncrs otp"
+    message = generateOTP()
+    recepient = request.POST.get('to')
+    if subject and message:
+        try:
+             send_mail(subject, message, settings.EMAIL_HOST_USER, [recepient],fail_silently=False)
+             verified_email = authentication(email=recepient)
+             verified_email.save()
+             otp = message
+             print(subject, message, settings.EMAIL_HOST_USER, [recepient],otp)
+        except Exception:
+                return HttpResponse('Invalid header found.')
+        return render(request,'MNCSApp/investigator_otp_success.html',{"recepient":recepient})
+    else:
+            return HttpResponse('Make sure all fields are entered and valid.')
+
 def Verifyotp(request):
     recepient = request.POST.get('otp')
-    if otp == recepient:
+    print("atsgdsgdg",OTP)
+    if OTP == recepient:
         return render(request, 'MNCSApp/register.html')
-    return render(request, 'MNCSApp/emailverification.html')
+    else:
+        message = "Invalid OTP"
+        return render(request, "MNCSApp/OTP_Success.html", {"message": message})
+
+
+def Verify_investigator_otp(request):
+    recepient = request.POST.get('otp')
+    print("atsgdsgdg",OTP)
+    if OTP == recepient:
+        return render(request, 'MNCSApp/Investigator_Registration_Form.html')
+    else:
+        message = "Invalid OTP"
+        return render(request, "MNCSApp/investigator_otp_success.html", {"message": message})
+#AIzaSyAdGtJtNhabHTlY7cRTvkVcWbkBEDvzCJ0
+
 
 
 """def Update_Status(request, id):
@@ -750,10 +788,13 @@ def Verifyotp(request):
     return render(request, "MNCSApp/take_action.html",{"registration":Regstrn, 'details':Regsterd_id, })
 def edit_stat(request, id):
 
+
+
     status = Status.objects.get(id=id)
     print("bhkbhhbhb",id)
     context = {'status': status}
-    return render(request,"MNCSApp/edit_status.html", context)
+    return render(request,"
+    MNCSApp/edit_status.html", context)
 
 def edited_status_update(request, id):
     status = Status.objects.get(id=id)

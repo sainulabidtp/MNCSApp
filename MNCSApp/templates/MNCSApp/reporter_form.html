@@ -18,13 +18,23 @@
   <textarea class="form-control" name="report_text" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
 </div>
 <div class="form-group" >
-<label for="exampleFormControlFile1">Upload Image</label>
+<label>Upload Image</label>
 <input type="file" name="proof_image" accept="image/*" class="form-control-file" >
 </div>
             <div class="form-group">
-<label for="exampleFormControlFile1">Upload Video</label>
+<label>Upload Video</label>
 <input type="file" name="proof_clip" accept="video/MP4V-ES/*" class="form-control-file" >
 </div>
+
+
+            <div class="form-group">
+<label>Upload Location</label>
+<input type="text" id="location" name="location" required>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGtJtNhabHTlY7cRTvkVcWbkBEDvzCJ0&libraries=places"></script>
+<script>
+    var input = document.getElementById('location');
+    var autocomplete = new google.maps.places.Autocomplete(input, {types: ['geocode']});
+  </script></div>
 
 
 <div class="text-center">

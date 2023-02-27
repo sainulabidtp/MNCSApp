@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MNCSApp',
+    'django_google_maps'
+
 
 ]
 
@@ -57,6 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,6 +125,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/MNCSApp/static/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MNCSApp/static/media')
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -134,3 +138,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sainulabidtp7@gmail.com'
 EMAIL_HOST_PASSWORD = 'qqxvrwzjutviifuc'
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyAdGtJtNhabHTlY7cRTvkVcWbkBEDvzCJ0'

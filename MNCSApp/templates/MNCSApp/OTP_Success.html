@@ -21,6 +21,7 @@
   font-weight: 600;
 }
 
+
 .contact .php-email-form .error-message br+br {
   margin-top: 25px;
 }
@@ -60,7 +61,18 @@
   box-shadow: none;
   font-size: 14px;
 }
+.bbtn{
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 45px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
 
+.bbtn:hover {
+  background: rgba(0, 131, 116, 0.8);
+}
 .contact .php-email-form input[type=text],
 .contact .php-email-form input[type=email],
 .contact .php-email-form textarea {
@@ -185,7 +197,13 @@
                   <input type="text" name="otp" class="form-control" id="name" placeholder="Enter OTP" required>
                 </div>
               </div>
-              <div class="text-center"><button type="submit">Submit</button></div>
+                 {% if message %}
+     <div class="col-md-6 alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+          {{ message }}
+    </div>
+    {% endif %}
+              <div class="text-center"><button class="bbtn" type="submit">Submit</button></div>
             </form>
 
           </div><!-- End Contact Form -->

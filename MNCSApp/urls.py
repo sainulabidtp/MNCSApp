@@ -28,7 +28,8 @@ re_path(r'^update_edit_user_complaints/(\d+)$', views.update_edit_user_complaint
 re_path(r'^Admin_Login/$', views.Admin_Login, name='Admin_Login'),
 re_path(r'^home/$', views.home, name='home'),
 re_path(r'^ManageInvestigators/$', views.ManageInvestigators, name='ManageInvestigators'),
-re_path(r'^ManageRepotrters/$', views.ManageRepotrters, name='ManageRepotrters'),
+re_path(r'^ManageReports/$', views.ManageReports, name='ManageReports'),
+re_path(r'^ManageReporters/$', views.ManageReporters, name='ManageReporters'),
 re_path(r'^ManageReportersComplaints/(\d+)$', views.ManageReportersComplaints, name='ManageReportersComplaints'),
 re_path(r'^DeleteFakeReport/(\d+)$', views.DeleteFakeReport, name='DeleteFakeReport'),
 re_path(r'^Investigator_take_action/(\d+)$', views.Investigator_take_action, name='Investigator_take_action'),
@@ -40,7 +41,10 @@ re_path(r'^Send_Feedback/$', views.Send_Feedback, name='Send_Feedback'),
 re_path(r'^View_Feedback/$', views.View_Feedback, name='View_Feedback'),
 re_path(r'^send_OTP/$', views.send_OTP, name='send_OTP'),
 re_path(r'^Email_Verification/$', views.Email_Verification.as_view(), name='Email_Verification'),
-re_path(r'^Verifyotp/$', views.Verifyotp, name='Verifyotp')
+re_path(r'^Verifyotp/$', views.Verifyotp, name='Verifyotp'),
+re_path(r'^investigator_send_OTP/$', views.investigator_send_OTP, name='investigator_send_OTP'),
+re_path(r'^Investigator_Email_Verification/$', views.Investigator_Email_Verification.as_view(), name='Investigator_Email_Verification'),
+re_path(r'^Verify_investigator_otp/$', views.Verify_investigator_otp, name='Verify_investigator_otp'),
 
 
 ]

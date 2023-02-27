@@ -40,14 +40,6 @@ Loading">
 Loading" type="video/mp4"></video>
 </td>
             <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/Investigator_take_action/{{item.id}}">View Details</a></button></td>
-            {% for i in details %}
-            {% if i.Blocked == "True" %}
-            <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/unblock_user/{{item.Reporter_ID_id}}">Unblock</a></button></td>
-            {% elif i.Blocked == "False" %}
-             <td><button type="button" class="btn btn-info"><a class="nav-link text-white" href="/block_user/{{item.Reporter_ID_id}}">Block</a></button></td>
-            {% endif %}
-            {% endfor %}
-
         </tr>
 
 

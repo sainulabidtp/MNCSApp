@@ -2786,8 +2786,10 @@ section {
       <li class="nav-item">
               <a class="nav-link text-white" href="/Invetigator_logout/">Log Out</a>
           </li>
-
-
+            {% elif request.session.USERNAME is  None and  request.session.INVESTIGATOR is None  %}
+<li class="nav-item">
+              <a class="nav-link text-white" href="/DBLogin/">Log In</a>
+          </li>
 
              {% endif %}
         </ul>
